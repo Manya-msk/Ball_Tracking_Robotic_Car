@@ -1,5 +1,5 @@
 # Ball Tracking Robotic Car
-My goal of this project was to create a robot car with sensors to me drawn to a ___ colored ball and be able to faace it/follow it. From this, I learned how to use a raspberry pi, gotten a much better understanding of circuits, and Python. [My chosen modification was to be make the robot sense for light so if it is dark, a light will turn on] 
+My goal of this project was to create a robot car with camera to me drawn to a ___ colored ball and be able to faace it/follow it. From this, I learned how to use a raspberry pi, gotten a much better understanding of circuits, and Python. [My chosen modification was to be make the robot sense for light so if it is dark, a light will turn on] 
 
 You should comment out all portions of your portfolio that you have not completed yet, as well as any instructions:
 ```HTML 
