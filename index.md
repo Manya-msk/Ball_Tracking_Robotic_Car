@@ -57,10 +57,9 @@ For your first milestone, describe what your project is and how you plan to buil
 ![Image](schematics.jpg)
 
 # Code
-Here's where you'll put your code. The syntax below places it into a block of code. Follow the guide [here]([url](https://www.markdownguide.org/extended-syntax/)) to learn how to customize it to your project needs. 
 
+Importing packages and setting up GPIO pins and motors.
 ```c++
-# import the necessary packages
 from picamera.array import PiRGBArray     #As there is a resolution problem in raspberry pi, will not be able to capture frames by VideoCapture
 from picamera import PiCamera
 import RPi.GPIO as GPIO
@@ -141,6 +140,10 @@ def sonar(GPIO_TRIGGER,GPIO_ECHO):
       #print ("Distance : %.1f" % distance)
       # Reset GPIO settings
       return distance
+```
+Determining direction with the motors
+
+```c++   
 
 GPIO.setup(MOTOR1B, GPIO.OUT)
 GPIO.setup(MOTOR1E, GPIO.OUT)
@@ -237,6 +240,10 @@ def target_hist(frame):
     hist=cv2.calcHist([hsv_img],[0],None,[50],[0,255])
     return hist
 
+```
+Turning on the camera
+```c++     
+
 #CAMERA CAPTURE
 #initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
@@ -247,7 +254,9 @@ trackGoal = False
  
 # allow the camera to warmup
 time.sleep(0.001)
- 
+```
+Searching for color
+```c++  
 # capture frames from the camera
 for image in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
       #grab the raw NumPy array representing the image, then initialize the timestamp and occupied/unoccupied text
@@ -299,9 +308,10 @@ for image in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
          
       if(cv2.waitKey(1) & 0xff == ord('q')):
             break
-      
+```
+If the ball is not found, the robot will swivel around and search. If the ball is found and it is too close to the camera, this also adjsuts its distance by moving in reverse.
+```c++        
       if(found==0):
-            #if the ball is not found and the last time it sees ball in which direction, it will start to rotate in that direction
             if flag==0:
                   stop()
                   rightturn()
@@ -340,6 +350,9 @@ for image in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
                   elif(distanceC<8):
                         stop()
                         trackGoal = True
+```
+If the ball is found, it tries to center the object in the middle of the frame, sleeps for a little, then finally recontinues its search for something new. 
+```c++   
             elif (trackGoal==True):
                   if (area < 130000):
                         if (centre_x<=-20 or centre_x>=20):
