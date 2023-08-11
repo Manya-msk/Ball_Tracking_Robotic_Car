@@ -182,7 +182,7 @@ def stop():
       GPIO.output(MOTOR2B,GPIO.LOW)
 ```
 
-Tracking green color and round shapes:
+Tracking green color with HSV color system:
 
 ```c++     
 #Image analysis work
@@ -214,6 +214,12 @@ def segment_colour_goal(frame):    #returns only the red colors in the frame
     mask=cv2.dilate(mask,kern_dilate)     #Dilating
     #cv2.imshow('mask',mask)
     return mask
+
+```
+
+Tracking round objects:
+
+```c++   
 
 def find_blob(blob): #returns the red colored circle
     largest_contour=0
@@ -276,7 +282,9 @@ for image in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
             mask_red = segment_colour_goal(frame)
             loct,area=find_blob(mask_red)
       #masking red/green the frame
-      
+```
+Print output from the ultrasonic sensors
+```c++  
       x,y,w,h=loct
       print (area)
       #distance coming from front ultrasonic sensor
@@ -285,7 +293,9 @@ for image in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
       distanceR = sonar(GPIO_TRIGGER3,GPIO_ECHO3)
       #distance coming from left ultrasonic sensor
       distanceL = sonar(GPIO_TRIGGER1,GPIO_ECHO1)
-             
+```
+Defining what found means
+```c++  
       if (w*h) < 20:
             found=0
       else:
@@ -300,8 +310,6 @@ for image in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
       initial=800
       flag=0
       #GPIO.output(LED_PIN,GPIO.LOW)
-      
-      
       
       cv2.imshow("draw",frame)    
       rawCapture.truncate(0)  # clear the stream in preparation for the next frame
