@@ -67,7 +67,9 @@ import time
 import cv2
 
 import numpy as np
-
+```
+Connecting the raspberry pi GPIO pins to the code
+```c++
 #hardware work
 GPIO.setmode(GPIO.BOARD)
 
